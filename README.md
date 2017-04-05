@@ -1,3 +1,3 @@
 # go-deep-check
 
-not finished yet. work is in progress
+not finished yet. work in progress
