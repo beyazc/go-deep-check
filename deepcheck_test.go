@@ -10,14 +10,14 @@ type student struct {
 }
 
 func TestDifferentTypes(t *testing.T) {
-	student1 := student{}
-	student2 := student{}
+	student1 := student{"john", 10}
+	student2 := student{"john", 10}
 	number := 12
 	if Equals(number, student2) {
 		t.Error("different types should not be equal")
 	}
 
-	if Equals(student1, student2) {
+	if !Equals(student1, student2) {
 		t.Error("same type should be equal")
 	}
 
@@ -114,11 +114,26 @@ func TestPrimitives(t *testing.T) {
 	var uintVal2 uint = 1
 	var uintVal3 uint = 2
 	if !Equals(uintVal1, uintVal2) {
-		t.Error("same bool uint shoul be equal")
+		t.Error("same uint shoul be equal")
 	}
 
 	if Equals(uintVal1, uintVal3) {
 		t.Error("different uint values shoul not be equal")
+	}
+
+}
+
+func TestStruc(t *testing.T) {
+	mystudent1 := student{"john", 10}
+	mystudent2 := student{"john", 10}
+	mystudent3 := student{"mark", 20}
+
+	if !Equals(mystudent1, mystudent2) {
+		t.Error("same struct shoul be equal")
+	}
+
+	if Equals(mystudent1, mystudent3) {
+		t.Error("different struct values shoul not be equal")
 	}
 
 }

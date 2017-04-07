@@ -20,32 +20,42 @@ var (
 
 //Equals returns whether given interfaces are equal or not
 func Equals(a, b interface{}) bool {
-	//aVal := reflect.Value(a)
-	//bVal := reflect.Value(b)
 
-	aType := reflect.TypeOf(a)
-	bType := reflect.TypeOf(b)
+	//two nils are equal
+	if a == nil && b == nil {
+		return true
+	}
+	if a == nil || b == nil {
+		log.Println(ErrNilParameterReceived)
+		return false
+	}
+	aVal := reflect.ValueOf(a)
+	bVal := reflect.ValueOf(b)
+	return equalsInternal(aVal, bVal)
+}
+
+func equalsInternal(aVal, bVal reflect.Value) bool {
+	aType := aVal.Type()
+	bType := bVal.Type()
 
 	if aType != bType {
 		log.Println(ErrTypesDoesNotMatch)
 		return false
 	}
 
-	if a == nil && b == nil {
+	if !aVal.IsValid() && !bVal.IsValid() {
 		return true
 	}
 
-	if a == nil && b != nil {
+	if !aVal.IsValid() && bVal.IsValid() {
 		log.Println(ErrNilParameterReceived)
 		return false
 	}
 
-	if b == nil && a != nil {
+	if !bVal.IsValid() && aVal.IsValid() {
 		log.Println(ErrNilParameterReceived)
 		return false
 	}
-	aVal := reflect.ValueOf(a)
-	bVal := reflect.ValueOf(b)
 
 	switch aVal.Kind() {
 	//primitive types
@@ -60,7 +70,9 @@ func Equals(a, b interface{}) bool {
 			return false
 		}
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		if aVal.Int() != bVal.Int() {
+		aInt := aVal.Int()
+		bInt := bVal.Int()
+		if aInt != bInt {
 			log.Println(ErrValueMismatched)
 			return false
 		}
@@ -74,6 +86,20 @@ func Equals(a, b interface{}) bool {
 			log.Println(ErrValueMismatched)
 			return false
 		}
+
+	//struct types
+	case reflect.Struct:
+
+		for i := 0; i < aType.NumField(); i++ {
+			fieldA := (aVal.Field(i))
+			fieldB := (bVal.Field(i))
+
+			if fieldComparisionRes := equalsInternal(fieldA, fieldB); !fieldComparisionRes {
+				fmt.Printf("fields did not matched for field %v,%v\n", fieldA, fieldB)
+				return false
+			}
+		}
+		return true
 
 	default:
 		fmt.Println(ErrNotHandled)
