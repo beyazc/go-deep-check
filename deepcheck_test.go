@@ -62,9 +62,9 @@ func TestEqualsInterfacePointer(t *testing.T) {
 }
 
 func TestPrimitives(t *testing.T) {
-	var intVal1 int = 2
-	var intVal2 int = 2
-	var intval3 int = 3
+	intVal1 := 2
+	intVal2 := 2
+	intval3 := 3
 
 	if !Equals(intVal1, intVal2) {
 		t.Error("same int values shoul be equal")
@@ -74,9 +74,9 @@ func TestPrimitives(t *testing.T) {
 		t.Error("different int values shoul not be equal")
 	}
 
-	var floatVal1 float32 = 2.0
-	var floatVal2 float32 = 2.0
-	var floatVal3 float32 = 3
+	floatVal1 := 2.0
+	floatVal2 := 2.0
+	floatVal3 := 3
 
 	if !Equals(floatVal1, floatVal2) {
 		t.Error("same float values shoul be equal")
@@ -86,9 +86,9 @@ func TestPrimitives(t *testing.T) {
 		t.Error("different float values shoul not be equal")
 	}
 
-	var boolVal1 bool = true
-	var boolVal2 bool = true
-	var boolVal3 bool = false
+	boolVal1 := true
+	boolVal2 := true
+	boolVal3 := false
 
 	if !Equals(boolVal1, boolVal2) {
 		t.Error("same bool values shoul be equal")
@@ -98,9 +98,9 @@ func TestPrimitives(t *testing.T) {
 		t.Error("different bool values shoul not be equal")
 	}
 
-	var stringVal1 string = "deepcheck"
-	var stringVal2 string = "deepcheck"
-	var stringVal3 string = "checdeep"
+	stringVal1 := "deepcheck"
+	stringVal2 := "deepcheck"
+	stringVal3 := "checdeep"
 
 	if !Equals(stringVal1, stringVal2) {
 		t.Error("same bool string shoul be equal")
@@ -110,9 +110,9 @@ func TestPrimitives(t *testing.T) {
 		t.Error("different string values shoul not be equal")
 	}
 
-	var uintVal1 uint = 1
-	var uintVal2 uint = 1
-	var uintVal3 uint = 2
+	uintVal1 := 1
+	uintVal2 := 1
+	uintVal3 := 2
 	if !Equals(uintVal1, uintVal2) {
 		t.Error("same uint shoul be equal")
 	}
